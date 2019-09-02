@@ -8,13 +8,16 @@ services:
       args:
         ELK_VERSION: $ELK_VERSION
     volumes:
-      - /path/to/storage:/usr/share/elasticsearch/data
+      - data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx1g -Xms1g"
       ELASTIC_PASSWORD: password
+      node.name: node-1
+      cluster.initial_master_nodes: node-1
+
     networks:
       - elk
 
@@ -54,3 +57,6 @@ networks:
 
   elk:
     driver: bridge
+
+volumes:
+  data:
